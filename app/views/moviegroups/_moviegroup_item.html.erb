@@ -1,0 +1,13 @@
+
+            <tr>                              
+                <td><%= link_to group.title, moviegroup_path(group) %></td>
+                <td><%= render_moviegroup_description(group) %></td>
+                <td><%= group.user.email %> </td>
+                <td>                
+                <% if current_user && current_user == group.user %>                                                                                    
+                <%= link_to "修改", edit_moviegroup_path(group), class: "btn btn-sm btn-default" %>
+                <%= link_to "刪除", moviegroup_path(group),    class: "btn btn-sm btn-default",
+                            method: :delete, data: { confirm: "確認刪除#{group.title}嗎?" } %>
+                <% end %>
+                </td>
+            </tr>            

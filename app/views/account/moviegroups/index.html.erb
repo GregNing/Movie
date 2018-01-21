@@ -1,0 +1,24 @@
+<div class="col-md-12">
+<h2 class="text-center"> 已參加群組的電影</h2>
+<table class="table">
+    <thead>
+    <tr>    
+        <th>電影名稱</th>
+        <th>電影內容</th>
+        <th>發文次數</th>
+        <th>最後更新時間</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @groups.each do |group| %>
+        <tr>
+        <td> <%= link_to(group.title, moviegroup_path(group)) %> </td>
+        <td> <%= group.description %> </td>
+        <td> <%= group.reviews.count %> </td>
+        <td> <%= group.updated_at %> </td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+</div>

@@ -31,7 +31,7 @@ class MoviegroupsController < ApplicationController
 
     def update
         if @group.update(moviegroup_params)
-            redirect_to moviegroups_path, notice: "#{@group.title}修改成功!"
+            redirect_to moviegroup_path(@group), notice: "#{@group.title}修改成功!"
         else
             render :edit
         end

@@ -9,7 +9,10 @@
             <%= link_to "加入#{@group.title}", join_moviegroup_path(@group), method: :post, class: "btn btn-default" %>
         <% end %>        
     </span>
+    
+    <% if current_user && current_user.is_member_of?(@group) %>
     <%= link_to "發表評論", new_moviegroup_review_path(@group),class: "btn btn-default pull-right" %>
+    <% end %>    
     <% if current_user && current_user == @group.user %>            
     <%= link_to "修改", edit_moviegroup_path, class: "btn btn-primary pull-right" %>
     <% end %>
@@ -19,7 +22,7 @@
 <table class="table">
 <thead>
 <tr>
-<th>文章内容</th>
+<th>評論内容</th>
 <th>評論者</th>
 <th>發表時間</th>
 </tr>

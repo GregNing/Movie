@@ -3,8 +3,13 @@ Rails.application.routes.draw do
   resources :moviegroups do
     member do
       post :join
-      post :quit
+      post :quit      
     end
+    resources :reviews
+  end
+  resources :reviews
+  namespace :account do
+    resources :moviegroups
     resources :reviews
   end
   root 'moviegroups#index'
