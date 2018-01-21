@@ -1,5 +1,14 @@
 <div class="col-md-12">
 <div class="group">
+    <span class="pull-right">        
+        <% if current_user && current_user.is_member_of?(@group) %>
+            <label class="label label-success">已是<%= @group.title %>成員 </label>
+            <%= link_to "退出#{@group.title}", quit_moviegroup_path(@group), method: :post, class: "btn btn-default" %>
+        <% else %>
+            <label class="label label-warning">不是<%= @group.title %>成員 </label>
+            <%= link_to "加入#{@group.title}", join_moviegroup_path(@group), method: :post, class: "btn btn-default" %>
+        <% end %>        
+    </span>
     <%= link_to "發表評論", new_moviegroup_review_path(@group),class: "btn btn-default pull-right" %>
     <% if current_user && current_user == @group.user %>            
     <%= link_to "修改", edit_moviegroup_path, class: "btn btn-primary pull-right" %>

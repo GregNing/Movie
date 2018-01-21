@@ -1,6 +1,6 @@
 class MoviegroupsController < ApplicationController
     before_action :find_moviegroups_id, :only => [:destroy, :edit, :update]
-    before_action :authenticate_user!, only: [:new,:edit,:update,:destroy]
+    before_action :authenticate_user!, only: [:new,:edit,:update,:destroy, :join, :quit]
     def index
         @groups = Moviegroup.all
     end
@@ -13,6 +13,7 @@ class MoviegroupsController < ApplicationController
         @group = Moviegroup.new(moviegroup_params)
         @group.user = current_user
         if @group.save
+            current_user.join!(@group)
             redirect_to moviegroups_path, notice: "#{@group.title}新增成功!"
         else
             render :new
@@ -41,6 +42,29 @@ class MoviegroupsController < ApplicationController
         flash[:alert] = "#{@group.title}刪除成功!"
         redirect_to moviegroups_path
     end
+
+    def join
+        @group = Moviegroup.find(params[:id])
+        if !current_user.is_member_of?(@group)
+            current_user.join!(@group)
+            flash[:notice] = "加入#{@group.title}成功!"
+        else            
+            flash[:warning] = "你已經是#{@group.title}群組了!"
+        end        
+        redirect_to moviegroup_path(@group)
+    end
+
+    def quit
+        @group = Moviegroup.find(params[:id])            
+        if current_user.is_member_of?(@group)
+            current_user.quit!(@group)
+            flash[:alert] = "你已退出#{@group.title}!"
+        else
+            flash[:warning] = "你已不在#{@group.title}群組!"
+        end
+        redirect_to moviegroup_path(@group)
+    end
+
     private
     def find_moviegroups_id
         @group = Moviegroup.find(params[:id])
