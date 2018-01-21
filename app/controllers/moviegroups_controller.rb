@@ -21,6 +21,7 @@ class MoviegroupsController < ApplicationController
 
     def show
         @group = Moviegroup.find(params[:id])
+        @posts = @group.reviews.recent.paginate(:page => params[:page], :per_page => 5)
     end
 
     def edit

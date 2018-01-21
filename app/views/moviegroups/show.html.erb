@@ -1,11 +1,32 @@
 <div class="col-md-12">
 <div class="group">
-    
+    <%= link_to "發表評論", new_moviegroup_review_path(@group),class: "btn btn-default pull-right" %>
     <% if current_user && current_user == @group.user %>            
     <%= link_to "修改", edit_moviegroup_path, class: "btn btn-primary pull-right" %>
     <% end %>
 </div>
 <h2><%= @group.title %> </h2>
 <p><%= render_moviegroup_description(@group) %></p>
+<table class="table">
+<thead>
+<tr>
+<th>文章内容</th>
+<th>評論者</th>
+<th>發表時間</th>
+</tr>
+</thead>
+<tbody>
+    <% @posts.each do |post| %>
+    <tr>
+        <td><%= post.content %></td>
+        <td><%= post.user.email %></td>
+        <td><%= post.created_at %></td>
+    </tr>
+    <% end %>
+</tbody>
+</table>
+<div class="text-center">
+    <%= will_paginate @posts%>
+</div>
 </div>
 <%= link_to "回首頁", moviegroups_path,  class: "btn btn-primary pull-right" %>
