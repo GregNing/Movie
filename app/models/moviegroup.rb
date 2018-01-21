@@ -1,0 +1,2 @@
+class Moviegroup < ApplicationRecord
+end
